@@ -5,7 +5,7 @@
  * Jogo de Aventura - Mochila Fracionaria (Estrategia Gulosa)
  *
  * Integrantes do grupo:
- *   - [Integrante 1]
+ *   - Antônio Costa 10723636
  *   - [Integrante 2]
  *   - [Integrante 3]
  *
