@@ -2,15 +2,22 @@
  * Universidade Presbiteriana Mackenzie
  * Projeto e Analise de Algoritmos II - Projeto 2
  *
- * Jogo de Aventura - Mochila Fracionaria (Estrategia Gulosa)
+ * Mochila Fracionaria (Algoritmo Guloso)
  *
+<<<<<<< HEAD
  * Integrantes do grupo:
  *   - Antônio Costa 10723636
  *   - [Integrante 2]
  *   - [Integrante 3]
+=======
+ * Integrantes:
+ *   - Antonio Costa / RA: 10723636
+ *   - Mihael Xavier / RA: 10239617
+ *   - Rafael Moutinho / RA: 10395682
+>>>>>>> dafb4fa (fix: nome de integrantes e comentarios atualizados)
  *
- * Compilacao: gcc mochilaMagica.c -o mochilaMagica
- * Execucao:   ./mochilaMagica entrada_jogo.txt saida_jogo.txt
+ * Compilacar: gcc mochilaMagica.c -o mochilaMagica
+ * Execucao:  ./mochilaMagica entrada_jogo.txt saida_jogo.txt
  */
 
 #include <stdio.h>
@@ -26,7 +33,6 @@
 #define MAX_LINHA   512
 #define EPS         1e-9
 
-/* Identificadores das regras especiais de cada fase. */
 typedef enum {
     REGRA_DESCONHECIDA,
     MAGICOS_VALOR_DOBRADO,
@@ -35,7 +41,6 @@ typedef enum {
     TRES_MELHORES_VALOR_PESO
 } Regra;
 
-/* Representa um item disponivel em uma fase. */
 typedef struct {
     char   nome[MAX_NOME];
     double peso;          /* peso original em kg */
@@ -44,7 +49,6 @@ typedef struct {
     int    indivisivel;   /* 1 = nao pode ser fracionado */
 } Item;
 
-/* Representa uma fase do jogo. */
 typedef struct {
     char   nome[MAX_NOME];
     double capacidade;
@@ -54,11 +58,9 @@ typedef struct {
     int    n_itens;
 } Fase;
 
-/* =========================================================
- *                   Funcoes utilitarias
- * ========================================================= */
 
-/* Remove espacos em branco no inicio e no fim da string (in-place). */
+
+/* funcao auxiliar para remover espacos em branco no inicio e no fim da string  */
 static void trim(char *s) {
     size_t inicio = 0, fim;
     while (s[inicio] && isspace((unsigned char)s[inicio])) inicio++;
@@ -69,7 +71,7 @@ static void trim(char *s) {
     }
 }
 
-/* Converte o identificador textual da regra para o enum correspondente. */
+/* funcao auxiliar para identificar a regra */
 static Regra identificar_regra(const char *id) {
     if (strcmp(id, "MAGICOS_VALOR_DOBRADO") == 0)        return MAGICOS_VALOR_DOBRADO;
     if (strcmp(id, "TECNOLOGICOS_INTEIROS") == 0)        return TECNOLOGICOS_INTEIROS;
@@ -78,7 +80,7 @@ static Regra identificar_regra(const char *id) {
     return REGRA_DESCONHECIDA;
 }
 
-/* Descricao humana da regra, usada na saida. */
+/* funcao auxiliar para extrair a descricao da regra */
 static const char *descricao_regra(Regra r) {
     switch (r) {
         case MAGICOS_VALOR_DOBRADO:       return "Itens magicos com valor dobrado";
@@ -89,10 +91,7 @@ static const char *descricao_regra(Regra r) {
     }
 }
 
-/* =========================================================
- *           Ordenacao manual (selection sort)
- * Sem uso de qsort, conforme exigencia do enunciado.
- * ========================================================= */
+/* Funcoes auxiliares e ordenacao */
 
 static void trocar_itens(Item *a, Item *b) {
     Item tmp = *a;
@@ -118,17 +117,15 @@ static void ordenar_por_valor_peso(Item *itens, int n) {
     }
 }
 
-/* =========================================================
- *                Leitura do arquivo de entrada
- * ========================================================= */
+/* funcoes para leitura de arquivo*/
 
-/* Faz o parse de uma linha "ITEM: nome, peso, valor, tipo". Retorna 1 em sucesso. */
+/* parse de uma linha "ITEM: nome, peso, valor, tipo". Retorna 1 se sucesso. */
 static int parse_item(char *conteudo, Item *it) {
     char *campos[4];
     int   i, n_campos = 0;
     char *p = conteudo;
 
-    /* Quebra a string em ate 4 campos separados por virgula. */
+    /* Quebra em ate 4 campos separados por virgula. */
     campos[n_campos++] = p;
     while (*p && n_campos < 4) {
         if (*p == ',') {
@@ -153,10 +150,10 @@ static int parse_item(char *conteudo, Item *it) {
     return 1;
 }
 
-/* Le todas as fases do arquivo. Retorna o numero de fases lidas ou -1 em erro. */
+/* Le todas as fases no arquivo. Retorna numero de fases lidas ou -1 se erro. */
 static int ler_arquivo(FILE *fin, Fase fases[], int max_fases) {
     char linha[MAX_LINHA];
-    int  n = -1;            /* indice da fase atual */
+    int  n = -1;            /* i da fase atual */
     int  num_linha = 0;
 
     while (fgets(linha, sizeof(linha), fin)) {
@@ -222,9 +219,7 @@ static int ler_arquivo(FILE *fin, Fase fases[], int max_fases) {
     return n + 1;
 }
 
-/* =========================================================
- *               Aplicacao das regras especiais
- * ========================================================= */
+/* funcoes para aplicar as regras*/
 
 /* Modifica os itens da fase conforme a regra especial. */
 static void aplicar_regra(Fase *fase) {
@@ -264,12 +259,10 @@ static void aplicar_regra(Fase *fase) {
     }
 }
 
-/* =========================================================
- *           Estrategia gulosa da mochila fracionaria
- * ========================================================= */
+/* Estrategia gulosa*/
 
 /*
- * Executa o guloso na fase e escreve os itens escolhidos no arquivo de saida.
+ * aplica o algoritmo guloso na fase e write os itens escolhidos no arquivo de saida.
  * Retorna o lucro obtido na fase.
  */
 static double processar_fase(FILE *fout, Fase *fase) {
@@ -281,7 +274,7 @@ static double processar_fase(FILE *fout, Fase *fase) {
     fprintf(fout, "Capacidade da mochila: %.2f kg\n", fase->capacidade);
     fprintf(fout, "Regra aplicada: %s\n\n", descricao_regra(fase->regra));
 
-    ordenar_por_valor_peso(fase->itens, fase->n_itens);
+    ordenar_por_valor_peso(fase->itens, fase->n_itens); // ordenacao
 
     for (i = 0; i < fase->n_itens; i++) {
         Item *it = &fase->itens[i];
@@ -313,12 +306,10 @@ static double processar_fase(FILE *fout, Fase *fase) {
     return lucro_fase;
 }
 
-/* =========================================================
- *                          Main
- * ========================================================= */
+/* funcao principal main*/
 
 int main(int argc, char *argv[]) {
-    static Fase fases[MAX_FASES];   /* static para evitar grande alocacao no stack */
+    static Fase fases[MAX_FASES];   
     int    n_fases, i;
     double lucro_total = 0.0;
     FILE  *fin, *fout;
@@ -359,6 +350,6 @@ int main(int argc, char *argv[]) {
     fprintf(fout, "Lucro total acumulado: R$ %.2f\n", lucro_total);
 
     fclose(fout);
-    printf("Processamento concluido. Saida gravada em '%s'.\n", argv[2]);
+    printf("Concluido. Saida gravada em '%s'.\n", argv[2]);
     return 0;
 }
