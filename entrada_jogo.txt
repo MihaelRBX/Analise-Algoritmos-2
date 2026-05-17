@@ -1,0 +1,31 @@
+FASE: Floresta Encantada
+CAPACIDADE: 5.0
+REGRA: MAGICOS_VALOR_DOBRADO
+ITEM: Pocao da Cura, 0.5, 80, magico
+ITEM: Espada Rustica, 2.0, 150, normal
+ITEM: Capa Invisivel, 1.0, 120, magico
+ITEM: Pedaço de Madeira, 3.0, 60, normal
+
+FASE: Ruinas Perdidas
+CAPACIDADE: 4.0
+REGRA: TECNOLOGICOS_INTEIROS
+ITEM: Gerador Antigo, 2.5, 300, tecnologico
+ITEM: Sensor de Movimento, 1.0, 120, tecnologico
+ITEM: Cabo de Energia, 1.0, 40, normal
+ITEM: Manual de Operacao, 0.5, 60, normal
+
+FASE: Montanhas Geladas
+CAPACIDADE: 3.5
+REGRA: SOBREVIVENCIA_DESVALORIZADA
+ITEM: Barraca Quebrada, 2.0, 100, sobrevivencia
+ITEM: Cobertor Termico, 1.0, 80, sobrevivencia
+ITEM: Kit de Primeiros Socorros, 0.5, 70, sobrevivencia
+ITEM: Garrafa de Agua, 0.5, 50, normal
+
+FASE: Templo Subterraneo
+CAPACIDADE: 6.0
+REGRA: TRES_MELHORES_VALOR_PESO
+ITEM: Mascara Dourada, 2.0, 300, normal
+ITEM: Livro Sagrado, 1.5, 200, normal
+ITEM: Moeda Antiga, 0.5, 90, normal
+ITEM: Estatua Quebrada, 4.0, 280, normal
